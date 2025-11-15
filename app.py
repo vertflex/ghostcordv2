@@ -1,16 +1,18 @@
 import os
-from flask import Flask, request
-from flask_socketio import SocketIO, emit
+import eventlet
+eventlet.monkey_patch()
+from flask import Flask
+from flask_socketio import SocketIO, emit, request
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'ghostcord'
+app.config['SECRET_KEY'] = 'ghostcordv2'
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
 users = {}
 
 @app.route('/')
 def index():
-    return 'GhostCord Backend Live'
+    return 'GhostCord V2 Backend: ACTIVE & READY'
 
 @socketio.on('add user')
 def add_user(username):
@@ -29,4 +31,5 @@ def disconnect():
         emit('user left', {'username': username, 'users': list(users.values())}, broadcast=True)
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app, host='0.0.0.0', port=port, debug=False)
