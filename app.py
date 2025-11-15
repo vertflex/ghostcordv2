@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request
 from flask_socketio import SocketIO, emit
 
@@ -15,6 +16,7 @@ def index():
 def add_user(username):
     users[request.sid] = username
     emit('login', {'users': list(users.values())}, broadcast=True)
+    emit('user joined', {'username': username, 'users': list(users.values())}, broadcast=True)
 
 @socketio.on('new message')
 def new_message(data):
