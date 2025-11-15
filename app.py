@@ -5,14 +5,14 @@ from flask import Flask
 from flask_socketio import SocketIO, emit, request
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'ghostcordv2'
+app.config['SECRET_KEY'] = 'ghostcordv3'
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
 users = {}
 
 @app.route('/')
 def index():
-    return 'GhostCord V2 Backend: ACTIVE & READY'
+    return 'GhostCord V3 Backend: EMPIRE AWAKENS'
 
 @socketio.on('add user')
 def add_user(username):
